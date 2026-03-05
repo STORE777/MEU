@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Nossa História ❤️</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#111;
+color:white;
+text-align:center;
+overflow-x:hidden;
+}
+
+/* TELA INICIAL */
+
+#inicio{
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+}
+
+#inicio button{
+padding:18px 35px;
+font-size:20px;
+border:none;
+border-radius:12px;
+background:#ff4e8a;
+color:white;
+cursor:pointer;
+}
+
+/* CONTEUDO PRINCIPAL */
+
+#conteudo{
+display:none;
+}
+
+h1{
+margin-top:20px;
+}
+
+#contador{
+font-size:22px;
+margin:15px;
+}
+
+#mensagem{
+font-size:18px;
+max-width:520px;
+margin:auto;
+padding:20px;
+line-height:1.6;
+min-height:80px;
+}
+
+.galeria{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:10px;
+padding:20px;
+max-width:520px;
+margin:auto;
+}
+
+.galeria img{
+width:100%;
+border-radius:12px;
+aspect-ratio:1/1;
+object-fit:cover;
+}
+
+button{
+padding:10px 20px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+}
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<canvas id="hearts"></canvas>
+
+<div id="inicio">
+
+<h1>Tenho uma surpresa para você ❤️</h1>
+
+<button onclick="abrirSurpresa()">Clique para abrir</button>
+
+</div>
+
+<div id="conteudo">
+
+<h1>Nosso Amor ❤️</h1>
+
+<div id="contador"></div>
+
+<div id="mensagem"></div>
+
+<div class="galeria">
+
+<img src="foto1.jpg">
+<img src="foto2.jpg">
+<img src="foto3.jpg">
+<img src="foto4.jpg">
+<img src="foto5.jpg">
+<img src="foto6.jpg">
+<img src="foto7.jpg">
+<img src="foto8.jpg">
+<img src="foto9.jpg">
+<img src="foto10.jpg">
+
+</div>
+
+<br>
+
+<button onclick="toggleMusic()">Tocar / Pausar Música 🎵</button>
+
+<audio id="musica" loop>
+<source src="musica.mp3" type="audio/mp3">
+</audio>
+
+</div>
+
+<script>
+
+/* ABRIR SURPRESA */
+
+function abrirSurpresa(){
+
+document.getElementById("inicio").style.display="none"
+document.getElementById("conteudo").style.display="block"
+
+document.getElementById("musica").play()
+
+digitar()
+
+}
+
+/* CONTADOR RELACIONAMENTO */
+
+const startDate = new Date("2020-02-18")
+
+function updateClock(){
+
+const now = new Date()
+
+let diff = now - startDate
+
+let seconds = Math.floor(diff/1000)%60
+let minutes = Math.floor(diff/1000/60)%60
+let hours = Math.floor(diff/1000/60/60)%24
+let daysTotal = Math.floor(diff/1000/60/60/24)
+
+let years = Math.floor(daysTotal/365)
+let months = Math.floor((daysTotal%365)/30)
+let days = (daysTotal%365)%30
+
+document.getElementById("contador").innerHTML =
+years+" anos "+months+" meses "+days+" dias<br>"+
+hours+" horas "+minutes+" minutos "+seconds+" segundos juntos ❤️"
+
+}
+
+setInterval(updateClock,1000)
+
+/* MENSAGEM DIGITANDO */
+
+const texto =
+"Oi meu amor ❤️\n\nFiz essa lembrancinha simples, mas com amor. 💌\n\nObrigado por ser quem você é, obrigado por aparecer na minha vida, obrigado pela paciência por tudo. 🙏\n\nEu te amo com toda a certeza do mundo, nunca duvide disso. 💖\n\nAmo seu beijo 😘, o cheiro dos seus cabelos 🌸, as curvas do seu corpo 😍.\n\nVocê é a perfeição em pessoa ✨.\n\nTem uma bct doce que me deixa doido kkkkk 🤭🔥 você de 4 com o rabão todo empinado pqp 😈🔥 eu amo tudo isso em você.\n\nO que você precisar conte comigo 🤝\n\nSou seu marido, seu amigo, sou o que você precisar.\n\nEU TE AMO MUITO ❤️"
+
+let i = 0
+
+function digitar(){
+
+if(i < texto.length){
+
+document.getElementById("mensagem").innerHTML += texto.charAt(i)
+
+i++
+
+setTimeout(digitar,40)
+
+}
+
+}
+
+/* MUSICA */
+
+function toggleMusic(){
+
+const m = document.getElementById("musica")
+
+if(m.paused){m.play()}
+else{m.pause()}
+
+}
+
+/* CORAÇÕES */
+
+const canvas = document.getElementById("hearts")
+const ctx = canvas.getContext("2d")
+
+canvas.width = window.innerWidth
+canvas.height = window.innerHeight
+
+let hearts=[]
+
+for(let i=0;i<40;i++){
+
+hearts.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+size:Math.random()*20+10,
+speed:Math.random()*1+0.5
+})
+
+}
+
+function draw(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+ctx.fillStyle="rgba(255,80,120,0.8)"
+
+hearts.forEach(h=>{
+
+ctx.font=h.size+"px Arial"
+ctx.fillText("❤",h.x,h.y)
+
+h.y+=h.speed
+
+if(h.y>canvas.height){
+h.y=-10
+h.x=Math.random()*canvas.width
+}
+
+})
+
+requestAnimationFrame(draw)
+
+}
+
+draw()
+
+</script>
+
+</body>
+</html>
